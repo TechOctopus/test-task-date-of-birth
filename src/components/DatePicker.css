@@ -1,0 +1,50 @@
+.datePicker {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dateInput {
+    width: 120px;
+    margin: 1%;
+    display: flex;
+    justify-content: center;
+    border: 3px solid #000;
+    border-radius: 20px;
+}
+
+.dateQuery {
+    width: 100%;
+    margin: 2px;
+    background: transparent;
+    border: 0;
+}
+
+.dateQuery:focus-visible {
+    outline: 0;
+}
+
+.logo {
+    max-width: 15px;
+    max-height: 15px;
+}
+
+.button {
+    margin: 2px;
+    background: transparent;
+    border-radius: 20px;
+    border: 0;
+    display: flex;
+}
+
+.button:hover {
+    background: rgba(0,0,0,15%);
+}
+
+.Calendar {
+    position: absolute;
+    top: 55%;
+    box-shadow: 4px 4px 50px 0px rgba(34, 60, 80, 0.2);
+}

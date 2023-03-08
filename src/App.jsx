@@ -1,9 +1,10 @@
 import './App.css'
+import DatePicker from "./components/DatePicker.jsx";
 
 function App() {
   return (
     <div className="App">
-        <h1>Hallo World!</h1>
+        <DatePicker></DatePicker>
     </div>
   )
 }
