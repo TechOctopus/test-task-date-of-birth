@@ -10,7 +10,6 @@ export const nameMapper = {
     eo: 'Esperanto',
     es: 'Spanish',
     et: 'Estonian',
-    faIR: 'Persian',
     fi: 'Finnish',
     fil: 'Filipino',
     fr: 'French',
