@@ -7,8 +7,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import './CalendarInput.css'
 
-const CalendarInput = memo(({date, returnDate, returnLocale}) => {
-    const [locale, setLocale] = React.useState('sk');
+const CalendarInput = memo(({date, returnDate, returnLocale, locale}) => {
 
     const localeOptions = Object.keys(locales)
         .map(key => ({
@@ -23,9 +22,7 @@ const CalendarInput = memo(({date, returnDate, returnLocale}) => {
     }
 
     const handleLocale = (locale) => {
-        setLocale(locale);
         returnLocale(locale);
-        console.log(locale);
     }
 
     return (
@@ -48,6 +45,6 @@ const CalendarInput = memo(({date, returnDate, returnLocale}) => {
             />
         </div>
     );
-}, (prev, curr) => prev.date === curr.date);
+}, (prev, curr) => prev.date === curr.date && prev.locale === curr.locale);
 
 export default CalendarInput;

@@ -56,6 +56,7 @@ const DatePicker = ({placeholder}) => {
             {!isValid && <p>Not valid</p>}
             {showCalendar &&
                 <CalendarInput
+                    locale={locale}
                     returnLocale={getLocale}
                     date={calendarDate}
                     returnDate={getDateFromCalendar}
