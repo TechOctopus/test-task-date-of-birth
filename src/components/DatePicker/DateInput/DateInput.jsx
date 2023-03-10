@@ -1,6 +1,5 @@
 import React from 'react'
 import {formatDate, isValidDate} from "../../../utils/formatDate.js";
-import {DebounceInput} from "react-debounce-input";
 
 import "./DateInput.css"
 const DateInput = ({value, returnDate, toggleCalendar, showCalendarChanger}) => {
@@ -13,8 +12,7 @@ const DateInput = ({value, returnDate, toggleCalendar, showCalendarChanger}) => 
 
     return (
         <div className="dateInput">
-            <DebounceInput
-                debounceTimeout={10}
+            <input
                 value={value}
                 className="dateQuery"
                 type="datetime"
@@ -22,6 +20,7 @@ const DateInput = ({value, returnDate, toggleCalendar, showCalendarChanger}) => 
                 onFocus={() => {showCalendarChanger(true)}}
                 onBlur={() => {showCalendarChanger(false)}}
                 placeholder="dd/mm/yyyy"
+                maxLength="10"
             />
             <button
                 className="button"
