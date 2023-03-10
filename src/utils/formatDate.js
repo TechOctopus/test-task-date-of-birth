@@ -40,3 +40,7 @@ export const getDateAsObj = (dateString, locale) => {
     const mask = getDateMask(dateString, locale);
     return parse(dateString, mask, new Date());
 }
+
+export const getDateAsString = (date, locale) => {
+    return new Intl.DateTimeFormat(locale, { dateStyle: 'short' }).format(date);
+}

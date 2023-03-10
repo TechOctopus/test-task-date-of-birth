@@ -4,7 +4,7 @@ import DateInput from "./DateInput/DateInput.jsx";
 import CalendarInput from "./CalendarInput/CalendarInput.jsx";
 
 import './DatePicker.css'
-import {getDateAsObj} from "../../utils/formatDate.js";
+import {getDateAsObj, getDateAsString} from "../../utils/formatDate.js";
 
 const DatePicker = ({placeholder}) => {
     const [date, setDate] = useState("");
@@ -28,6 +28,8 @@ const DatePicker = ({placeholder}) => {
     const getDateFromCalendar = useCallback((date, dateString) => {
         setDate(dateString)
         setCalendarDate(date)
+        setIsValid(true);
+        showCalendarChanger(false)
     }, []);
 
     const toggleCalendar = () => {
@@ -40,8 +42,8 @@ const DatePicker = ({placeholder}) => {
 
     const getLocale = (lc) => {
         setLocale(lc);
+        if(isValid) setDate(getDateAsString(calendarDate, lc));
     }
-
 
     return (
         <div className="datePicker">

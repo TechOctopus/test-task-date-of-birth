@@ -7,8 +7,6 @@ export const nameMapper = {
     da: 'Danish',
     de: 'German',
     el: 'Greek',
-    enGB: 'English (United Kingdom)',
-    enUS: 'English (United States)',
     eo: 'Esperanto',
     es: 'Spanish',
     et: 'Estonian',
@@ -42,7 +40,5 @@ export const nameMapper = {
     th: 'Thai',
     tr: 'Turkish',
     uk: 'Ukrainian',
-    vi: 'Vietnamese',
-    zhCN: 'Chinese Simplified',
-    zhTW: 'Chinese Traditional'
+    vi: 'Vietnamese'
 };
