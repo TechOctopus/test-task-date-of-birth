@@ -12,13 +12,15 @@ const DateInput = ({value, returnDate, toggleCalendar, showCalendarChanger}) => 
     };
 
     return (
-        <div className="dateInput">
+        <div className="dateInput"
+
+        >
             <input
+                onFocus={() => {showCalendarChanger(true)}}
                 value={value}
                 className="dateQuery"
                 type="datetime"
                 onChange={e => handleDateChange(e)}
-                onFocus={() => {showCalendarChanger(true)}}
                 placeholder="dd/mm/yyyy"
                 maxLength="10"
             />

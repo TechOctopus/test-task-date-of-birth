@@ -9,11 +9,14 @@ import './DatePicker.css'
 const DatePicker = () => {
     const [date, setDate] = useState("");
     const [calendarDate, setCalendarDate] = useState(new Date());
-    const [isValid, setIsValid] = useState(false);
+    const [isValid, setIsValid] = useState(true);
     const [showCalendar, setShowCalendar] = useState(false);
 
     useEffect(() => {
-        if (date.length > 0 && isValid) setCalendarDate(getDateAsDate(date));
+        if (date.length > 0 && isValid) {
+            setCalendarDate(getDateAsDate(date));
+            showCalendarChanger(false)
+        }
     }, [isValid])
 
     const getDateFromInput = (dateString, valid) => {
@@ -35,19 +38,21 @@ const DatePicker = () => {
     }
 
 
-    return (<div className="datePicker">
-        <DateInput
-            value={date}
-            returnDate={getDateFromInput}
-            toggleCalendar={toggleCalendar}
-            showCalendarChanger={showCalendarChanger}
-        />
-        {!isValid && <p>Not valid</p>}
-        {showCalendar && <CalendarInput
-            date={calendarDate}
-            returnDate={getDateFromCalendar}
-        />}
-    </div>);
+    return (
+        <div className="datePicker">
+            <DateInput
+                value={date}
+                returnDate={getDateFromInput}
+                toggleCalendar={toggleCalendar}
+                showCalendarChanger={showCalendarChanger}
+            />
+            {!isValid && <p>Not valid</p>}
+            {showCalendar && <CalendarInput
+                date={calendarDate}
+                returnDate={getDateFromCalendar}
+            />}
+        </div>
+    );
 };
 
 export default DatePicker;

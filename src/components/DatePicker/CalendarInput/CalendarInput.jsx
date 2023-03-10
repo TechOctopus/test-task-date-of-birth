@@ -23,10 +23,8 @@ const CalendarInput = memo(({date, returnDate}) => {
         returnDate(item, dateString);
     }
 
-    console.log(date)
-
     return (
-        <div className="Calendar">
+        <div className="Calendar" >
             <select
                 style={{marginTop: "10px" }}
                 onChange={e => setLocale(e.target.value)}
