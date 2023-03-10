@@ -2,6 +2,7 @@ import React from 'react'
 import {formatDate, isValidDate} from "../../../utils/formatDate.js";
 
 import "./DateInput.css"
+
 const DateInput = ({value, returnDate, toggleCalendar, showCalendarChanger}) => {
 
     const handleDateChange = (e) => {
@@ -18,7 +19,6 @@ const DateInput = ({value, returnDate, toggleCalendar, showCalendarChanger}) => 
                 type="datetime"
                 onChange={e => handleDateChange(e)}
                 onFocus={() => {showCalendarChanger(true)}}
-                onBlur={() => {showCalendarChanger(false)}}
                 placeholder="dd/mm/yyyy"
                 maxLength="10"
             />

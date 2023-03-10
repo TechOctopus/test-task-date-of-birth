@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {memo} from 'react'
 import {Calendar} from "react-date-range";
 import format from "date-fns/format";
 import * as locales from "react-date-range/dist/locale/index.js";
@@ -8,7 +8,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import './CalendarInput.css'
 
-const CalendarInput = ({date, returnDate}) => {
+const CalendarInput = memo(({date, returnDate}) => {
     const [locale, setLocale] = React.useState('sk');
 
     const localeOptions = Object.keys(locales)
@@ -22,6 +22,8 @@ const CalendarInput = ({date, returnDate}) => {
         const dateString = format(item, 'dd/MM/yyyy')
         returnDate(item, dateString);
     }
+
+    console.log(date)
 
     return (
         <div className="Calendar">
@@ -43,6 +45,6 @@ const CalendarInput = ({date, returnDate}) => {
             />
         </div>
     );
-};
+}, (prev, curr) => prev.date === curr.date);
 
 export default CalendarInput;

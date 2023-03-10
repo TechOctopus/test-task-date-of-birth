@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import {useEffect, useState} from 'react';
 import DateInput from "./DateInput/DateInput.jsx";
 import CalendarInput from "./CalendarInput/CalendarInput.jsx";
@@ -12,21 +12,19 @@ const DatePicker = () => {
     const [isValid, setIsValid] = useState(false);
     const [showCalendar, setShowCalendar] = useState(false);
 
-    useEffect(
-        ()=>{
-            if(isValid) setCalendarDate(getDateAsDate(date));
-        }, [isValid]
-    )
+    useEffect(() => {
+        if (date.length > 0 && isValid) setCalendarDate(getDateAsDate(date));
+    }, [isValid])
 
     const getDateFromInput = (dateString, valid) => {
         setIsValid(valid);
         setDate(dateString);
     }
 
-    const getDateFromCalendar = (date, dateString) => {
+    const getDateFromCalendar = useCallback((date, dateString) => {
         setDate(dateString)
         setCalendarDate(date)
-    }
+    }, []);
 
     const toggleCalendar = () => {
         setShowCalendar(!showCalendar);
@@ -37,23 +35,19 @@ const DatePicker = () => {
     }
 
 
-    return (
-        <div className="datePicker">
-            <DateInput
-                value={date}
-                returnDate={getDateFromInput}
-                toggleCalendar={toggleCalendar}
-                showCalendarChanger={showCalendarChanger}
-            />
-            { showCalendar &&
-                <CalendarInput
-                    date={calendarDate}
-                    returnDate={getDateFromCalendar}
-                />
-            }
-
-        </div>
-    );
+    return (<div className="datePicker">
+        <DateInput
+            value={date}
+            returnDate={getDateFromInput}
+            toggleCalendar={toggleCalendar}
+            showCalendarChanger={showCalendarChanger}
+        />
+        {!isValid && <p>Not valid</p>}
+        {showCalendar && <CalendarInput
+            date={calendarDate}
+            returnDate={getDateFromCalendar}
+        />}
+    </div>);
 };
 
 export default DatePicker;
