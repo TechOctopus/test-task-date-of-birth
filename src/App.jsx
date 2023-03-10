@@ -4,7 +4,7 @@ import DatePicker from "./components/DatePicker/DatePicker.jsx";
 function App() {
   return (
     <div className="App">
-        <DatePicker></DatePicker>
+        <DatePicker placeholder={"dátum narodenia"}></DatePicker>
     </div>
   )
 }

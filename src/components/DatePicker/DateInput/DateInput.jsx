@@ -1,28 +1,26 @@
 import React from 'react'
-import {formatDate, isValidDate} from "../../../utils/formatDate.js";
+import {formatDate, isValid} from "../../../utils/formatDate.js";
 
 import "./DateInput.css"
 
-const DateInput = ({value, returnDate, toggleCalendar, showCalendarChanger}) => {
+const DateInput = ({value, placeholder, returnDate, toggleCalendar, showCalendarChanger, locale}) => {
 
     const handleDateChange = (e) => {
-        const formattedDateString = formatDate(e.target.value, e.target.selectionStart);
-        const valid = isValidDate(formattedDateString);
+        const formattedDateString = formatDate(e.target.value);
+        const valid = isValid(formattedDateString, locale);
         returnDate(formattedDateString, valid);
     };
 
     return (
-        <div className="dateInput"
-
-        >
+        <div className="dateInput">
             <input
                 onFocus={() => {showCalendarChanger(true)}}
                 value={value}
                 className="dateQuery"
                 type="datetime"
                 onChange={e => handleDateChange(e)}
-                placeholder="dd/mm/yyyy"
-                maxLength="10"
+                placeholder={placeholder}
+                maxLength="12"
             />
             <button
                 className="button"

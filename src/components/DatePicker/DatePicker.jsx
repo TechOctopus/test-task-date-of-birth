@@ -2,19 +2,20 @@ import React, {useCallback} from 'react'
 import {useEffect, useState} from 'react';
 import DateInput from "./DateInput/DateInput.jsx";
 import CalendarInput from "./CalendarInput/CalendarInput.jsx";
-import {getDateAsDate} from "../../utils/formatDate.js";
 
 import './DatePicker.css'
+import {getDateAsObj} from "../../utils/formatDate.js";
 
-const DatePicker = () => {
+const DatePicker = ({placeholder}) => {
     const [date, setDate] = useState("");
     const [calendarDate, setCalendarDate] = useState(new Date());
     const [isValid, setIsValid] = useState(true);
     const [showCalendar, setShowCalendar] = useState(false);
+    const [locale, setLocale] = React.useState('sk');
 
     useEffect(() => {
         if (date.length > 0 && isValid) {
-            setCalendarDate(getDateAsDate(date));
+            setCalendarDate(getDateAsObj(date, locale));
             showCalendarChanger(false)
         }
     }, [isValid])
@@ -37,20 +38,29 @@ const DatePicker = () => {
         setShowCalendar(state);
     }
 
+    const getLocale = (lc) => {
+        setLocale(lc);
+    }
+
 
     return (
         <div className="datePicker">
             <DateInput
                 value={date}
+                placeholder={placeholder}
                 returnDate={getDateFromInput}
                 toggleCalendar={toggleCalendar}
                 showCalendarChanger={showCalendarChanger}
+                locale={locale}
             />
             {!isValid && <p>Not valid</p>}
-            {showCalendar && <CalendarInput
-                date={calendarDate}
-                returnDate={getDateFromCalendar}
-            />}
+            {showCalendar &&
+                <CalendarInput
+                    returnLocale={getLocale}
+                    date={calendarDate}
+                    returnDate={getDateFromCalendar}
+                />
+            }
         </div>
     );
 };

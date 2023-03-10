@@ -1,63 +1,43 @@
-import parse from "date-fns/parse";
-import isValid from "date-fns/isValid";
-
-export const formatDate = (inputDate, selectionStart) => {
-
-    // Test to see if the user wants to change a date that is already written
-
-    if(inputDate.length !== selectionStart){
-        if(inputDate.length <= 5 && isValidDateToChange(inputDate, 1)){
-            return inputDate;
-        }
-        if (inputDate.length <= 10 && isValidDateToChange(inputDate, 2)){
-            return inputDate;
-        }
-    }
-
-    // Date formatting
-
-    let formattedDate = inputDate
-        .replace(/\D/g, "")
-        .replace(/(\d{2})(\d)/, "$1/$2")
-        .replace(/(\d{2})(\d)/, "$1/$2")
-        .replace(/(\d{4})\d+?$/, "$1");
-
-    if(!formattedDate) return "";
-
-    let [day, month, year] = formattedDate.split('/');
-
-    if (day && day.length === 1 && Number(day) >= 4) {
-        day = '0' + day;
-    }
-
-    if (month && month.length === 1 && Number(month) >= 2) {
-        month = '0' + month;
-    }
-
-    let parts = [day, month, year].filter(Boolean);
-    return parts.length > 1 ? parts.join('/') : parts[0];
-
+export const formatDate = (dateString) => {
+    const pattern = /^[\d\s\/\.\-\_]+$/;
+    if (!(pattern.test(dateString))) return dateString.replace(/[^\d\s\/\.\-\_]/g,'');
+    return dateString;
 };
 
-const checkUnitLength = (dateStr, Slashes) => {
-    const arr = dateStr.split('/');
-    if (Slashes === 1) return arr[0].length <= 2 && arr[1].length <= 2;
-    return arr[0].length <= 2 && arr[1].length <= 2 && arr[2].length <= 4;
+export const isValid = (dateString, locale) => {
+    const mask = getDateMask(dateString, locale)
+    return  isValidDate(dateString, mask);
 }
 
-const isValidDateToChange = (inputDate, Slashes) => {
-    const checkSlashes = (inputDate.match(/\//g) || []).length === Slashes;
-    const checkNumbers = /^[0-9/]+$/.test(inputDate);
-    const checkLength = checkUnitLength(inputDate, Slashes);
-    return checkSlashes && checkNumbers && checkLength;
+const isValidDate = (dateString, mask) => {
+    const regex = new RegExp(mask
+        .replace('dd', '\\d{2}')
+        .replace('mm', '\\d{2}')
+        .replace('yyyy', '\\d{4}')
+        .replace('yy', '\\d{2}'));
+    return regex.test(dateString);
 }
 
-export const getDateAsDate = (dateString) => {
-    return parse(dateString, 'dd/MM/yyyy', new Date());
+const getDateMask = (dateString, locale) => {
+    const dateFormat = new Intl.DateTimeFormat(locale, { dateStyle: 'short' }).formatToParts(new Date());
+    return  dateFormat.map(part => {
+        switch (part.type) {
+            case 'day':
+                return 'dd';
+            case 'month':
+                return 'mm';
+            case 'year':
+                return 'yyyy';
+            default:
+                return part.value;
+        }
+    }).join('');
 }
 
-export const isValidDate = (dateString) => {
-    const pattern = /^(0[1-9]|1[0-9]|2[0-9]|3[01])\/(0[1-9]|1[012])\/\d{4}$/;
-    const dateObj = getDateAsDate(dateString);
-    return pattern.test(dateString) && isValid(dateObj);
-};
+export const getDateAsObj = (dateString, locale) => {
+    const mask = getDateMask(dateString, locale);
+    const day = parseInt(dateString.substring(mask.indexOf("dd"), mask.indexOf("dd") + 2));
+    const month = parseInt(dateString.substring(mask.indexOf("mm"), mask.indexOf("mm") + 2));
+    const year = parseInt(dateString.substring(mask.indexOf("yyyy"), mask.indexOf("yyyy") + 4));
+    return new Date(month+"/"+day+"/"+year);
+}

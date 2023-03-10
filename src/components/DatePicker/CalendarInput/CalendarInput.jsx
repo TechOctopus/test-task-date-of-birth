@@ -1,6 +1,5 @@
 import React, {memo} from 'react'
 import {Calendar} from "react-date-range";
-import format from "date-fns/format";
 import * as locales from "react-date-range/dist/locale/index.js";
 import {nameMapper} from "../../../utils/nameMapper.js";
 
@@ -8,7 +7,7 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import './CalendarInput.css'
 
-const CalendarInput = memo(({date, returnDate}) => {
+const CalendarInput = memo(({date, returnDate, returnLocale}) => {
     const [locale, setLocale] = React.useState('sk');
 
     const localeOptions = Object.keys(locales)
@@ -19,15 +18,21 @@ const CalendarInput = memo(({date, returnDate}) => {
         .filter(item => nameMapper[item.value]);
 
     const handleDate = (item) => {
-        const dateString = format(item, 'dd/MM/yyyy')
+        const dateString = new Intl.DateTimeFormat(locale, { dateStyle: 'short' }).format(item);
         returnDate(item, dateString);
+    }
+
+    const handleLocale = (locale) => {
+        setLocale(locale);
+        returnLocale(locale);
+        console.log(locale);
     }
 
     return (
         <div className="Calendar" >
             <select
                 style={{marginTop: "10px" }}
-                onChange={e => setLocale(e.target.value)}
+                onChange={e => handleLocale(e.target.value)}
                 value={locale}
             >
                 {localeOptions.map((option, i) => (
