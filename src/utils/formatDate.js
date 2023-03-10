@@ -1,8 +1,8 @@
 import { parse } from 'date-fns';
 
 export const formatDate = (dateString) => {
-    const pattern = /^[\d\s\/\.\-\_]+$/;
-    if (!(pattern.test(dateString))) return dateString.replace(/[^\d\s\/\.\-\_]/g,'');
+    const pattern = /^[\d\s\/\.\-\_\г]+$/;
+    if (!(pattern.test(dateString))) return dateString.replace(/[^\d\s\/\.\-\_\г]/g,'');
     return dateString;
 };
 
